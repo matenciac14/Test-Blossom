@@ -2,8 +2,6 @@
 
 Full-stack application for searching and managing Rick & Morty characters.
 
-**Live demo:** _coming soon_
-
 ---
 
 ## Tech Stack
