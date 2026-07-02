@@ -6,50 +6,13 @@ const options: swaggerJsdoc.Options = {
     info: {
       title: 'Rick and Morty API',
       version: '1.0.0',
-      description: `
-## Rick and Morty REST + GraphQL API
-
-This server exposes two interfaces:
-
-| Interface | URL | Description |
-|---|---|---|
-| **GraphQL** | \`/graphql\` | Main API — queries and mutations for characters and comments. Use Apollo Sandbox (dev) or any GraphQL client. |
-| **REST** | \`/health\` | Health check endpoint |
-| **Swagger** | \`/api-docs\` | This documentation |
-
-### GraphQL Quick Reference
-
-**Query characters:**
-\`\`\`graphql
-query {
-  characters(filters: { status: "Alive", species: "Human", sortBy: "name_asc" }) {
-    id name species status image isFavorite
-  }
-}
-\`\`\`
-
-**Toggle favorite:**
-\`\`\`graphql
-mutation { toggleFavorite(id: 1) { id isFavorite } }
-\`\`\`
-
-**Add comment:**
-\`\`\`graphql
-mutation { addComment(characterId: 1, content: "Great!") { id content createdAt } }
-\`\`\`
-
-**Soft delete:**
-\`\`\`graphql
-mutation { softDeleteCharacter(id: 1) { id deletedAt } }
-\`\`\`
-      `,
-      contact: { name: 'Blossom Technical Test' },
+      description: 'REST + GraphQL API for searching and managing Rick & Morty characters. Use the `/graphql` endpoint for all queries and mutations, or open it in your browser to launch Apollo Sandbox.',
     },
     servers: [
       { url: 'http://localhost:4000', description: 'Development' },
-      { url: 'https://your-backend.railway.app', description: 'Production' },
     ],
     tags: [
+      { name: 'GraphQL', description: 'All queries and mutations — characters, comments, favorites, soft-delete' },
       { name: 'System', description: 'Health and status endpoints' },
     ],
   },
