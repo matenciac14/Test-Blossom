@@ -74,45 +74,78 @@ erDiagram
     characters ||--o{ comments : "has many"
 ```
 
-## Quick Start
+## Running locally
 
 ### Prerequisites
-- Docker + Docker Compose
-- Node.js 20+
-- npm or pnpm
 
-### 1. Clone & setup
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) running
+- Node.js 20+
+- npm
+
+### Step 1 — Clone
 
 ```bash
 git clone <repo-url>
 cd blossom-test
 ```
 
-### 2. Start infrastructure
+### Step 2 — Start PostgreSQL + Redis
 
 ```bash
 docker-compose up -d
-# Starts PostgreSQL on :5432 and Redis on :6379
 ```
 
-### 3. Backend
+Wait ~5 seconds for the containers to be healthy before continuing.
+
+### Step 3 — Backend
 
 ```bash
 cd backend
-cp .env.example .env
+cp .env.example .env   # default values work out of the box
 npm install
-npm run migrate     # create tables
-npm run seed        # insert 15 characters from Rick & Morty API
-npm run dev         # starts on http://localhost:4000/graphql
+npm run migrate        # creates tables in PostgreSQL
+npm run seed           # fetches 15 characters from Rick & Morty API and inserts them
+npm run dev            # http://localhost:4000/graphql
 ```
 
-### 4. Frontend
+> The seed calls the public Rick & Morty API — internet connection required.
+
+### Step 4 — Frontend
+
+Open a new terminal tab:
 
 ```bash
 cd frontend
-cp .env.example .env
+cp .env.example .env   # points to http://localhost:4000/graphql
 npm install
-npm run dev         # starts on http://localhost:5173
+npm run dev            # http://localhost:5173
+```
+
+Open `http://localhost:5173` — the character list should load immediately.
+
+### Verify everything is working
+
+| URL | What you should see |
+|---|---|
+| `http://localhost:5173` | Character grid with 15 Rick & Morty characters |
+| `http://localhost:4000/graphql` | Apollo Sandbox (interactive GraphQL explorer) |
+| `http://localhost:4000/api-docs` | Swagger UI |
+| `http://localhost:4000/health` | `{ "status": "ok" }` |
+
+### Running tests
+
+```bash
+# Backend
+cd backend && npm test
+
+# Frontend
+cd frontend && npm test
+```
+
+### Stopping
+
+```bash
+docker-compose down   # stops and removes containers (data is preserved in volumes)
 ```
 
 ---
@@ -160,18 +193,6 @@ mutation { addComment(characterId: 1, content: "Great!") { id content createdAt 
 
 # Soft delete
 mutation { softDeleteCharacter(id: 1) { id deletedAt } }
-```
-
----
-
-## Running Tests
-
-```bash
-# Backend
-cd backend && npm test
-
-# Frontend
-cd frontend && npm test
 ```
 
 ---
