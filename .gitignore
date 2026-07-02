@@ -31,3 +31,6 @@ coverage/
 # Docker volumes (local data)
 postgres_data/
 redis_data/
+
+# Claude context (local only)
+CLAUDE.md
