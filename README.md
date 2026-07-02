@@ -46,27 +46,32 @@ application/     ← delivery layer (GraphQL, middleware, cron)
 
 ## ERD
 
-```
-characters
-  id          INTEGER   PK   (Rick & Morty API ID)
-  name        VARCHAR
-  status      VARCHAR        (Alive / Dead / unknown)
-  species     VARCHAR
-  type        VARCHAR
-  gender      VARCHAR
-  origin      VARCHAR
-  image       VARCHAR
-  isFavorite  BOOLEAN   default false
-  deletedAt   TIMESTAMP NULL (soft-delete)
-  createdAt   TIMESTAMP
-  updatedAt   TIMESTAMP
+```mermaid
+erDiagram
+    characters {
+        INTEGER     id          PK  "Rick and Morty API ID"
+        VARCHAR     name
+        VARCHAR     status          "Alive | Dead | unknown"
+        VARCHAR     species
+        VARCHAR     type            "Subspecies / occupation"
+        VARCHAR     gender          "Male | Female | Genderless | unknown"
+        VARCHAR     origin
+        VARCHAR     image           "Avatar URL"
+        BOOLEAN     isFavorite      "default false"
+        TIMESTAMP   deletedAt       "NULL — soft-delete"
+        TIMESTAMP   createdAt
+        TIMESTAMP   updatedAt
+    }
 
-comments
-  id          UUID      PK
-  characterId INTEGER   FK → characters.id
-  content     TEXT
-  createdAt   TIMESTAMP
-  updatedAt   TIMESTAMP
+    comments {
+        UUID        id          PK
+        INTEGER     characterId FK
+        TEXT        content
+        TIMESTAMP   createdAt
+        TIMESTAMP   updatedAt
+    }
+
+    characters ||--o{ comments : "has many"
 ```
 
 ## Quick Start
